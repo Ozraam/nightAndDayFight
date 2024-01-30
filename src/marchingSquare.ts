@@ -1,9 +1,10 @@
 import { Grid } from "./Grid";
-import { drawLine, drawPoint, drawText } from "./utils";
+import { Position } from "./Types";
+import { drawLine } from "./utils";
 
 export class MarchingSquare {
     private _grid: Grid;
-    private _lines : number[][] = [];
+    private _lines : Position[] = [];
 
     // limit of whitch the corner is considered as a line
     private _limit: number;
@@ -58,11 +59,12 @@ export class MarchingSquare {
                 
             
                 const line = MarchingSquare.line[squareValue]
-                    .map(([y, x]) => 
-                    [
-                        j * this._grid.squareWidth + x * this._grid.rectangleSize.width, 
-                        i * this._grid.squareWidth + y * this._grid.rectangleSize.height
-                    ]);
+                    .map(([y, x]) => {
+                        return {
+                            x: j * this._grid.cellSize.width + x * this._grid.rectangleSize.width, 
+                            y: i * this._grid.cellSize.height + y * this._grid.rectangleSize.height
+                        }
+                });
 
                 this._lines = this._lines.concat(line);
             }
