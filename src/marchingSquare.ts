@@ -1,5 +1,5 @@
 import { Grid } from "./Grid";
-import { Position } from "./Types";
+import { Position } from "./Position";
 import { drawLine } from "./utils";
 
 export class MarchingSquare {
@@ -60,10 +60,10 @@ export class MarchingSquare {
             
                 const line = MarchingSquare.line[squareValue]
                     .map(([y, x]) => {
-                        return {
-                            x: j * this._grid.cellSize.width + x * this._grid.rectangleSize.width, 
-                            y: i * this._grid.cellSize.height + y * this._grid.rectangleSize.height
-                        }
+                        return new Position(
+                            j * this._grid.cellSize.width + x * this._grid.rectangleSize.width, 
+                            i * this._grid.cellSize.height + y * this._grid.rectangleSize.height
+                        )
                 });
 
                 this._lines = this._lines.concat(line);
@@ -80,6 +80,10 @@ export class MarchingSquare {
         for (let i = 0; i < this._lines.length - 1; i+=2) {
             drawLine(this._grid.ctx, [this._lines[i], this._lines[i + 1]]);
         }
+    }
+
+    public get lines() : Position[] {
+        return this._lines;
     }
 
 }

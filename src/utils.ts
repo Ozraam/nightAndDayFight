@@ -1,5 +1,8 @@
+import { Ball } from "./Ball";
 import { Grid } from "./Grid";
-import { Position } from "./Types";
+import { Line } from "./Line";
+import { Position } from "./Position";
+import { Collision } from "./Types";
 
 export function setup(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {
     ctx.fillStyle = 'red';
@@ -20,8 +23,6 @@ export function setup(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) 
         width: squareWidth,
         height: squareHeight
     }, (_: Position, posOnScreen: Position) => {
-        console.log(posOnScreen.x / screenW);
-        
         return posOnScreen.x / screenW;
     });
     
@@ -57,4 +58,46 @@ export function drawDisc(ctx: CanvasRenderingContext2D, pos: Position, radius: n
     ctx.beginPath();
     ctx.arc(pos.x, pos.y, radius, 0, 2 * Math.PI);
     ctx.fill();
+}
+
+export function ballCollidingWithLine(ball: Ball, line: [Position, Position]) : Collision | null {
+    const [p1, p2] = line;
+    const [x1, y1] = [p1.x, p1.y];
+    const [x2, y2] = [p2.x, p2.y];
+    const [x, y] = [ball.position.x, ball.position.y];
+    const r = ball.radius;
+
+    const d = Math.abs((x2 - x1) * (y1 - y) - (x1 - x) * (y2 - y1)) / Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+
+    if (d > r) return null;
+
+    const dotproduct = (x - x1) * (x2 - x1) + (y - y1) * (y2 - y1);
+    if (dotproduct < 0) return null;
+
+    const squaredlengthba = (x2 - x1) ** 2 + (y2 - y1) ** 2;
+    if (dotproduct > squaredlengthba) return null;
+
+    return {
+        collider: new Line(p1, p2),
+        position: new Position(
+                x1 + (x2 - x1) * dotproduct / squaredlengthba,
+                y1 + (y2 - y1) * dotproduct / squaredlengthba
+            )
+        };
+}
+
+export function ballCollidingWithLines(ball: Ball, lines: [Position, Position][]) : Collision | null {
+    for (let i = 0; i < lines.length; i++) {
+        const collision = ballCollidingWithLine(ball, lines[i]);
+        if (collision) return collision;
+    }
+    return null;
+}
+
+export function groupElementInArrayByN<T>(array: T[], n: number): T[][] {
+    const result: T[][] = [];
+    for (let i = 0; i < array.length; i += n) {
+        result.push(array.slice(i, i + n));
+    }
+    return result;
 }

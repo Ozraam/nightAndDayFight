@@ -1,4 +1,5 @@
-import { Position, Size } from "./Types";
+import { Position } from "./Position";
+import { Size } from "./Types";
 import { drawPoint } from "./utils";
 
 export class Grid {
@@ -24,7 +25,7 @@ export class Grid {
         for (let i = 0; i < numberOfRow; i++) {
             this.grid[i] = [];
             for (let j = 0; j < numberOfColumn; j++) {
-                this.grid[i][j] = initialValueFunction({x: j, y: i}, {x: j * cellSize.width, y: i * cellSize.height});
+                this.grid[i][j] = initialValueFunction(new Position(j, i), new Position(j * cellSize.width, i * cellSize.height));
             }
         }
     }
@@ -46,7 +47,7 @@ export class Grid {
     drawGrid() {
         this.grid.forEach((row, i) => {
             row.forEach((value, j) => {
-                drawPoint(this.ctx, {x: j * this.cellSize.width, y: i * this.cellSize.height}, 'white', 2);
+                drawPoint(this.ctx, new Position(j * this.cellSize.width, i * this.cellSize.height), 'white', 2);
             });
         });
     }

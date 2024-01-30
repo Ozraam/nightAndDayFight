@@ -1,7 +1,6 @@
-export type Position = {
-    x: number;
-    y: number;
-};
+import { GameManager } from "./GameManager";
+import { Line } from "./Line";
+import { Position } from "./Position";
 
 export type Size = {
     width: number;
@@ -9,8 +8,8 @@ export type Size = {
 };
 
 export interface AnimatedObject extends Object {
-    update(): void;
-    draw(): void;
+    update(manager: GameManager): void;
+    draw(manager: GameManager): void;
 }
 
 class Object {
@@ -19,3 +18,8 @@ class Object {
         this.position = position;
     }
 }
+
+export type Collision = {
+    collider: Line;
+    position: Position;
+};
