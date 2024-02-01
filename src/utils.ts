@@ -12,6 +12,8 @@ export function setup(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) 
     const screenW = ctx.canvas.width;
     canvas.width = screenW;
     canvas.height = screenH;
+    canvas.setAttribute('width', screenW.toString());
+    canvas.setAttribute('height', screenH.toString());
 
     const numberOfRow = 100;
     const numberOfColumn = 100;

@@ -14,7 +14,13 @@ mS.processMarchingSquare();
 
 const manager = new GameManager(ctx);
 
-manager.addObject(new Ball(new Position(920, 100), 20))
+const moon = new Ball(new Position(400, screenH/2), 20);
+
+const sun = new Ball(new Position(1400, screenH/2), 20, -0.1);
+sun.color = 'yellow';
+sun.direction = sun.direction.multiply(-1);
+
+manager.addObject(moon, sun)
 
 manager.environment.set('mS', mS);
 
@@ -27,9 +33,9 @@ function draw() {
 
     mS.drawLines();
 
-    mS.limit = Math.sin(frames / 1000) * 0.5 + 0.5;
+    // mS.limit = Math.sin(frames / 1000) * 0.5 + 0.5;
 
-    manager.update();
+    manager.update(2);
     manager.draw();
 
     requestAnimationFrame(draw);

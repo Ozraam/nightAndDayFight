@@ -35,8 +35,10 @@ export class GameManager {
         this._objects = this._objects.filter(obj => obj !== object);
     }
 
-    update() {
-        this._objects.forEach(object => object.update(this));
+    update(nLoop: number = 1) {
+        for (let i = 0; i < nLoop; i++) {
+            this._objects.forEach(object => object.update(this));
+        }
     }
 
     draw() {

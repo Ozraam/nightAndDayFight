@@ -60,10 +60,19 @@ export class MarchingSquare {
             
                 const line = MarchingSquare.line[squareValue]
                     .map(([y, x]) => {
-                        return new Position(
+                        const p = new Position(
                             j * this._grid.cellSize.width + x * this._grid.rectangleSize.width, 
                             i * this._grid.cellSize.height + y * this._grid.rectangleSize.height
                         )
+
+                        p.setMeta("points", [
+                            [i,j],
+                            [i+1,j],
+                            [i+1,j+1],
+                            [i,j+1]
+                        ])
+
+                        return p;
                 });
 
                 this._lines = this._lines.concat(line);

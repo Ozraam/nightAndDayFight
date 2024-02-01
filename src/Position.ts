@@ -2,6 +2,7 @@ export class Position {
     x: number;
     y: number;
     static ZERO: Position = new Position(0, 0);
+    meta: any = {};
 
     constructor(x: number, y: number){
         this.x = x;
@@ -54,5 +55,13 @@ export class Position {
 
     angleBetween(direction: Position) {
         return direction.angle - this.angle;
+    }
+
+    setMeta(key: string, value: any) {
+        this.meta[key] = value;
+    }
+
+    getMeta(key: string) {
+        return this.meta[key];
     }
 };
