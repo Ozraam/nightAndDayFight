@@ -47,12 +47,14 @@ export class Ball implements AnimatedObject {
             this.direction.x *= (1 + Math.random() * 0.9);
         }
 
-        if(this.direction.x < 0.3 && this.direction.x > -0.3) {
-            this.direction.x = 0.3 * Math.sign(this.direction.x);
+        const minimumDirectionSpeed = 0.15;
+
+        if(this.direction.x < minimumDirectionSpeed && this.direction.x > -minimumDirectionSpeed) {
+            this.direction.x = minimumDirectionSpeed * Math.sign(this.direction.x);
         }
 
-        if(this.direction.y < 0.3 && this.direction.y > -0.3) {
-            this.direction.y = 0.3 * Math.sign(this.direction.y);
+        if(this.direction.y < minimumDirectionSpeed && this.direction.y > -minimumDirectionSpeed) {
+            this.direction.y = minimumDirectionSpeed * Math.sign(this.direction.y);
         }
 
         this.direction.x = Math.max(-1, Math.min(1, this.direction.x));
@@ -78,10 +80,10 @@ export class Ball implements AnimatedObject {
 
             const points = colliding.collider.start.getMeta('points') as number[][];
 
-            ms.grid.grid[points[0][0]][points[0][1]] -= this.substractValue * Math.random();
-            ms.grid.grid[points[1][0]][points[1][1]] -= this.substractValue * Math.random();
-            ms.grid.grid[points[2][0]][points[2][1]] -= this.substractValue * Math.random();
-            ms.grid.grid[points[3][0]][points[3][1]] -= this.substractValue * Math.random();
+            ms.grid.grid[points[0][0]][points[0][1]] -= this.substractValue;
+            ms.grid.grid[points[1][0]][points[1][1]] -= this.substractValue;
+            ms.grid.grid[points[2][0]][points[2][1]] -= this.substractValue;
+            ms.grid.grid[points[3][0]][points[3][1]] -= this.substractValue;
 
             points.forEach(([i, j]) => {
                 ms.grid.grid[i][j] = Math.max(0, Math.min(ms.grid.grid[i][j], 1));

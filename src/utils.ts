@@ -15,8 +15,8 @@ export function setup(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) 
     canvas.setAttribute('width', screenW.toString());
     canvas.setAttribute('height', screenH.toString());
 
-    const numberOfRow = 100;
-    const numberOfColumn = 100;
+    const numberOfRow = 20;
+    const numberOfColumn = 50;
 
     const squareWidth = screenW / numberOfColumn;
     const squareHeight = screenH / numberOfRow;
@@ -45,8 +45,9 @@ export function drawLine(ctx: CanvasRenderingContext2D, line: Position[]) {
     ctx.stroke();
 }
 
-export function drawText(ctx: CanvasRenderingContext2D, text: string, pos: Position) {
-    ctx.fillStyle = 'white';
+export function drawText(ctx: CanvasRenderingContext2D, text: string, pos: Position, color: string) {
+    ctx.fillStyle = color;
+    ctx.strokeStyle = color;
     ctx.font = '10px Arial';
     ctx.fillText(text, pos.x, pos.y);
 }
