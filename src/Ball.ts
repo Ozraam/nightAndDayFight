@@ -1,6 +1,6 @@
 import { GameManager } from "./GameManager";
-import { AnimatedObject, Collision } from "./Types";
-import { ballCollidingWithLines, drawDisc, drawLine, drawText, groupElementInArrayByN } from "./utils";
+import { AnimatedObject } from "./Types";
+import { ballCollidingWithLines, drawDisc, groupElementInArrayByN } from "./utils";
 import { Position } from "./Position";
 
 export class Ball implements AnimatedObject {
@@ -55,21 +55,8 @@ export class Ball implements AnimatedObject {
             this.direction.y = 0.3 * Math.sign(this.direction.y);
         }
 
-        if (this.direction.x > 1) {
-            this.direction.x = 1;
-        }
-
-        if (this.direction.y > 1) {
-            this.direction.y = 1;
-        }
-
-        if (this.direction.x < -1) {
-            this.direction.x = -1;
-        }
-
-        if (this.direction.y < -1) {
-            this.direction.y = -1;
-        }
+        this.direction.x = Math.max(-1, Math.min(1, this.direction.x));
+        this.direction.y = Math.max(-1, Math.min(1, this.direction.y));
 
 
         // drawText(manager.ctx, `${this.position.y + this.radius > manager.ctx.canvas.height}, ${this.position.y + this.radius}, ${manager.ctx.canvas.height}`, this.position.add(new Position(0, -80)));
@@ -95,6 +82,10 @@ export class Ball implements AnimatedObject {
             ms.grid.grid[points[1][0]][points[1][1]] -= this.substractValue * Math.random();
             ms.grid.grid[points[2][0]][points[2][1]] -= this.substractValue * Math.random();
             ms.grid.grid[points[3][0]][points[3][1]] -= this.substractValue * Math.random();
+
+            points.forEach(([i, j]) => {
+                ms.grid.grid[i][j] = Math.max(0, Math.min(ms.grid.grid[i][j], 1));
+            });
         }
         
 

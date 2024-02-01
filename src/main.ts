@@ -14,9 +14,11 @@ mS.processMarchingSquare();
 
 const manager = new GameManager(ctx);
 
-const moon = new Ball(new Position(400, screenH/2), 20);
 
-const sun = new Ball(new Position(1400, screenH/2), 20, -0.1);
+const substractValue = 1;
+const moon = new Ball(new Position(400, screenH/2), 20, substractValue);
+
+const sun = new Ball(new Position(1400, screenH/2), 20, -substractValue);
 sun.color = 'yellow';
 sun.direction = sun.direction.multiply(-1);
 

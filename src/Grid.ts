@@ -46,7 +46,7 @@ export class Grid {
 
     drawGrid() {
         this.grid.forEach((row, i) => {
-            row.forEach((value, j) => {
+            row.forEach((_, j) => {
                 drawPoint(this.ctx, new Position(j * this.cellSize.width, i * this.cellSize.height), 'white', 2);
             });
         });
