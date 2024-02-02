@@ -35,8 +35,6 @@ function draw() {
     ctx.fillStyle = 'yellow';
     ctx.fillRect(0, 0, screenW, screenH);
 
-    
-    mS.processMarchingSquareForFill();
     mS.processMarchingSquare();
     mS.drawPolygon('black');
 

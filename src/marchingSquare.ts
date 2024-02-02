@@ -1,6 +1,6 @@
 import { Grid } from "./Grid";
 import { Position } from "./Position";
-import { drawLine, drawText } from "./utils";
+import { drawLine } from "./utils";
 
 export class MarchingSquare {
     private _grid: Grid;
@@ -68,6 +68,7 @@ export class MarchingSquare {
 
     public processMarchingSquare() {
         this._lines = [];
+        this._polygon = [];
         for (let i = 0; i < this._grid.numberOfRow - 1; i++) {
             for (let j = 0; j < this._grid.numberOfColumn - 1; j++) {
 
@@ -77,7 +78,7 @@ export class MarchingSquare {
                     (this._grid.grid[i + 1][j] > this._limit ? 4 : 0) +
                     (this._grid.grid[i][j] > this._limit ? 8 : 0);
                 
-            
+                // Create contour of the square
                 const line = MarchingSquare.line[squareValue]
                     .map(([y, x]) => {
                         const p = new Position(
@@ -96,22 +97,8 @@ export class MarchingSquare {
                 });
 
                 this._lines = this._lines.concat(line);
-            }
-        }
-    }
 
-    public processMarchingSquareForFill() {
-        this._polygon = [];
-        for (let i = 0; i < this._grid.numberOfRow - 1; i++) {
-            for (let j = 0; j < this._grid.numberOfColumn - 1; j++) {
-
-                const squareValue = 
-                    (this._grid.grid[i][j + 1] > this._limit ? 1 : 0) +
-                    (this._grid.grid[i + 1][j + 1] > this._limit ? 2 : 0) +
-                    (this._grid.grid[i + 1][j] > this._limit ? 4 : 0) +
-                    (this._grid.grid[i][j] > this._limit ? 8 : 0);
-                
-            
+                // Create polygon of the square
                 const polygon = MarchingSquare.polygon[squareValue]
                     .map((pol) => {
                         return pol.map(([x, y]) => {
